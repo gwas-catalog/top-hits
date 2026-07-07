@@ -1,6 +1,6 @@
 [project]
 name = "gwas-assoc-tools"
-version = "0.1.2"
+version = "0.1.3"
 description = "GWAS Association Tools"
 authors = [{ name = "Karatug Ozan Bircan", email = "karatugo@ebi.ac.uk" }]
 readme = "README.md"
