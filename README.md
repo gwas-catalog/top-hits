@@ -32,25 +32,42 @@ gwas-assoc validate --help
 ### Setup
 
 ```bash
-# Install Poetry (if not already installed)
-curl -sSL https://install.python-poetry.org | python3 -
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install dependencies
-poetry install
+uv sync --all-groups
 
 # Activate virtual environment
-poetry shell
+source .venv/bin/activate
 ```
 
 ### Building and Installation
 
 ```bash
 # Build the package (creates .whl and .tar.gz in dist/)
-poetry build
+uv build
 
 # Install your new package in development mode
-poetry install
+uv sync --all-groups
 ```
+
+### Release
+
+Publishing is done by creating a GitHub Release. The release workflow builds the
+package with `uv` and publishes to PyPI using trusted publishing, so no local
+PyPI credentials or GitHub secrets are needed.
+
+Before the first release, configure the PyPI project `gwas-assoc-tools` with a
+GitHub trusted publisher:
+
+- Owner: `EBISPOT`
+- Repository: `gwas-assoc-tools`
+- Workflow: `publish.yml`
+- Environment: `pypi`
+
+Configure the matching GitHub environment `pypi`; add reviewer protection if the
+maintainers want manual approval.
 
 ### Testing
 
@@ -59,19 +76,19 @@ TODO
 ### Running with Real Files
 
 ```bash
-# Run the CLI command through Poetry
+# Run the CLI command through uv
 # For failed test file
-poetry run gwas-assoc validate ./tests/test_fail.xlsx   
+uv run gwas-assoc validate ./tests/test_fail.xlsx
 # For successful test file
-poetry run gwas-assoc validate ./tests/test_success.xlsx   
+uv run gwas-assoc validate ./tests/test_success.xlsx
 
 
 # Or after activating the shell
-poetry shell
+source .venv/bin/activate
 # For failed test file
-gwas-assoc validate ./tests/test_fail.xlsx   
+gwas-assoc validate ./tests/test_fail.xlsx
 # For successful test file
-gwas-assoc validate ./tests/test_success.xlsx   
+gwas-assoc validate ./tests/test_success.xlsx
 
 ```
 
@@ -79,33 +96,33 @@ gwas-assoc validate ./tests/test_success.xlsx
 
 ```bash
 # Add a new dependency
-poetry add new-package
+uv add new-package
 
 # Add a development dependency
-poetry add --group dev pytest-mock
+uv add --group dev pytest-mock
 
 # Check for dependency updates
-poetry update --dry-run
+uv lock --dry-run --upgrade
 
 # Update dependencies
-poetry update
+uv lock --upgrade
 ```
 
 ### Code Quality
 
 ```bash
 # Run formatting
-poetry run black .
-poetry run isort .
+uv run black .
+uv run isort .
 
 # Run linting
-poetry run ruff check .
+uv run ruff check .
 
 # Run type checking
-poetry run mypy src
+uv run mypy src
 
 # Run all formatting checks
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 ## Documentation
