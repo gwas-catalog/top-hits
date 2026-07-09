@@ -1,7 +1,7 @@
-# GWAS Association Tools
+# GWAS Top Hits
 
-A command-line tool for genomic-wide association studies (GWAS) data validation and analysis.
-
+Tools for submitting top associations to the GWAS Catalog.
+ 
 ## Features
 
 - Validate:
